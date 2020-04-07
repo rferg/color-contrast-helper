@@ -9,7 +9,7 @@ export class Color {
      * for calculating relative luminance of a color
      * (see https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef).
      */
-    static readonly LUMINANCE_COEFFICIENTS: number[] = [0.2126, 0.7152, 0.0722];
+    private static readonly LUMINANCE_COEFFICIENTS: number[] = [0.2126, 0.7152, 0.0722];
 
     private _hex: string;
     /**
@@ -44,6 +44,7 @@ export class Color {
      * @returns the {@link Rgb} representing the same color (if valid)
      */
     static convertHexToRgb(hex: string): Rgb {
+        if (!hex) { return null; }
         const [r, g, b] = hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i,
                 (_, rString, gString, bString) => '#' + rString + rString + gString + gString + bString + bString)
             .substring(1).match(/.{2}/g)
@@ -57,6 +58,7 @@ export class Color {
      * @returns hexadecimal string representation of the same color
      */
     static convertRgbToHex(rgb: Rgb): string {
+        if (!rgb) { return ''; }
         return '#' + rgb.toArray().map(rgbValue => rgbValue.toString(16).padStart(2, '0')).join('');
     }
 
