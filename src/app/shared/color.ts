@@ -86,6 +86,20 @@ export class Color {
             hex = '#' + hex;
         }
 
+        if (hex.length === 4) {
+            hex = this.expandAbbreviatedHex(hex);
+        }
+
         return hex;
+    }
+
+    /**
+     * Expands 3-character hex string into 6
+     * @param hex abbreviated hex string; must start with '#'
+     */
+    private expandAbbreviatedHex(hex: string): string {
+        let expanded = '';
+        for (const char of hex) { expanded += (char + (char === '#' ? '' : char)); }
+        return expanded;
     }
 }

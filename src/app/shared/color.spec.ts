@@ -33,20 +33,33 @@ describe('Color', () => {
             expect(color.hex).toBe('#' + noHashHex);
         });
 
-        it('should set valid hex value', () => {
+        it('should set valid full-length hex values', () => {
             const validValues = [
                 '#123abc',
-                '#fff',
                 '#999888',
-                '#abc',
                 'abcdef',
-                'def',
-                '123456'
+                '123456',
+                '609609'
             ];
             validValues.forEach(value => {
                 const color = new Color(value);
 
                 expect(color.hex).toBe(value[0] === '#' ? value : '#' + value);
+            });
+        });
+
+        it('should expand valid abbreviated hex values', () => {
+            const tests: { hex: string, expected: string }[] = [
+                { hex: 'fff', expected: '#ffffff' },
+                { hex: '#609', expected: '#660099' },
+                { hex: 'ab8', expected: '#aabb88' },
+                { hex: '#000', expected: '#000000' },
+                { hex: '#eab', expected: '#eeaabb' }
+            ];
+            tests.forEach(({hex, expected}) => {
+                const color = new Color(hex);
+
+                expect(color.hex).toBe(expected);
             });
         });
     });
