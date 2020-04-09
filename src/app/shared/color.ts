@@ -1,4 +1,5 @@
 import { Rgb } from './rgb';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 /**
  * Represents a color.
@@ -28,6 +29,18 @@ export class Color {
             this._rgb = Color.convertHexToRgb(this.hex);
         }
         return this._rgb;
+    }
+
+    private _relativeLuminance: number;
+    /**
+     * Gets relative luminance of this color as defined
+     * [here]{@link https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef}
+     */
+    get relativeLuminance(): number {
+        if (this._relativeLuminance === null || this._relativeLuminance === undefined) {
+            this._relativeLuminance = this.getRelativeLuminance();
+        }
+        return this._relativeLuminance;
     }
 
     /**
@@ -62,12 +75,7 @@ export class Color {
         return '#' + rgb.toArray().map(rgbValue => rgbValue.toString(16).padStart(2, '0')).join('');
     }
 
-    /**
-     * Gets relative luminance of this color as defined
-     * [here]{@link https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef}
-     * @returns the relative luminance of this color
-     */
-    getRelativeLuminance(): number {
+    private getRelativeLuminance(): number {
         return this.rgb.toStandardizedArray().reduce((result: number, rgbValue: number, index: number): number =>
             result + Color.LUMINANCE_COEFFICIENTS[index] * rgbValue, 0);
     }

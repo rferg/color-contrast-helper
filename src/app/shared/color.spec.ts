@@ -106,7 +106,7 @@ describe('Color', () => {
         });
     });
 
-    describe('getRelativeLuminance', () => {
+    describe('getter:relativeLuminance', () => {
 
         it('should return correct relative luminance', () => {
             const tests: { hex: string, expected: number}[] = [
@@ -123,7 +123,7 @@ describe('Color', () => {
             tests.forEach(test => {
                 const color = new Color(test.hex);
 
-                expect(color.getRelativeLuminance()).toBeCloseTo(test.expected, 3);
+                expect(color.relativeLuminance).toBeCloseTo(test.expected, 3);
             });
         });
     });
