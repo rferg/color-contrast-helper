@@ -47,6 +47,33 @@ describe('Rgb', () => {
         });
     });
 
+    describe('destandardize', () => {
+        it('should not return a value greater than 255', () => {
+            expect(Rgb.destandardize(100000)).toBe(255);
+        });
+
+        it('should not return a value less than 0', () => {
+            expect(Rgb.destandardize(-100000)).toBe(0);
+        });
+
+        it('should return correctly destandardized values', () => {
+            const tests = [
+                {r: 255, g: 247, b: 210 },
+                {r: 0, g: 12, b: 5 },
+                {r: 127, g: 33, b: 241 },
+                {r: 99, g: 57, b: 175 },
+                {r: 151, g: 68, b: 200 }
+            ];
+            tests.forEach(rgbValues => {
+                const rgb = new Rgb(rgbValues);
+                const rgbArray = rgb.toArray();
+                rgb.toStandardizedArray().forEach((standardizedValue, i) => {
+                    expect(Rgb.destandardize(standardizedValue)).toBe(rgbArray[i]);
+                });
+            });
+        });
+    });
+
     describe('toArray', () => {
        it('should return array of length 3', () => {
            const rgb = new Rgb(null);

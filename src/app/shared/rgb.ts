@@ -2,6 +2,12 @@
  * RGB representation of a color.
  */
 export class Rgb {
+    // These are constants for standardization calculation.
+    private static STANDARD_LOW_THRESHOLD = 0.03928;
+    private static STANDARD_LOW_FACTOR = 12.92;
+    private static EIGHT_BIT = 255;
+    private static STANDARD_EXPONENT = 2.4;
+    private static STANDARD_ADJUSTMENT = 0.055;
     /**
      * The red component of this color.
      */
@@ -17,7 +23,7 @@ export class Rgb {
 
     private _standardizedR: number;
     /**
-     * Gets the sRGB standardized red component of this color.
+     * Gets the sRGB gamma-corrected red component of this color.
      */
     private get standardizedR(): number {
         if (this._standardizedR === null || this._standardizedR === undefined) {
@@ -28,7 +34,7 @@ export class Rgb {
 
     private _standardizedG: number;
     /**
-     * Gets the sRGB standardized green component of this color.
+     * Gets the sRGB gamma-corrected green component of this color.
      */
     private get standardizedG(): number {
         if (this._standardizedG === null || this._standardizedG === undefined) {
@@ -39,7 +45,7 @@ export class Rgb {
 
     private _standardizedB: number;
     /**
-     * Gets the sRGB standardized blue component of this color.
+     * Gets the sRGB gamma-corrected blue component of this color.
      */
     private get standardizedB(): number {
         if (this._standardizedB === null || this._standardizedB === undefined) {
@@ -54,9 +60,26 @@ export class Rgb {
      */
     constructor(rgbValues: {r: number, g: number, b: number}) {
         const { r, g, b } = rgbValues || {};
-        this.r = Math.max(0, Math.min(r || 0, 255));
-        this.g = Math.max(0, Math.min(g || 0, 255));
-        this.b = Math.max(0, Math.min(b || 0, 255));
+        this.r = Math.max(0, Math.min(r || 0, Rgb.EIGHT_BIT));
+        this.g = Math.max(0, Math.min(g || 0, Rgb.EIGHT_BIT));
+        this.b = Math.max(0, Math.min(b || 0, Rgb.EIGHT_BIT));
+    }
+
+    /**
+     * Given a standardized, gamma-corrected RGB value, returns the eight-bit, linear value.
+     * @param standardizedValue - a standardized RGB value
+     */
+    static destandardize(standardizedValue: number): number {
+        let destandardizedValue: number;
+        if (standardizedValue * Rgb.STANDARD_LOW_FACTOR <= Rgb.STANDARD_LOW_THRESHOLD) {
+            destandardizedValue = standardizedValue * Rgb.STANDARD_LOW_FACTOR;
+        } else {
+            destandardizedValue = Math.pow(standardizedValue, 1 / Rgb.STANDARD_EXPONENT)
+                * (1 + Rgb.STANDARD_ADJUSTMENT)
+                - Rgb.STANDARD_ADJUSTMENT;
+        }
+        const eightBitValue = Math.round(destandardizedValue * Rgb.EIGHT_BIT);
+        return Math.max(Math.min(eightBitValue, Rgb.EIGHT_BIT), 0);
     }
 
     /**
@@ -68,7 +91,7 @@ export class Rgb {
     }
 
     /**
-     * Returns array of standard RGB (i.e., sRGB) values
+     * Returns array of standard, gamma-corrected RGB (i.e., sRGB) values
      * according to https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef.
      * R is the first element, G is second, and B is third.
      * @returns array of standardized RGB values
@@ -86,7 +109,7 @@ export class Rgb {
     }
 
     /**
-     * Standardizes component of RGB color
+     * Standardizes component of linear RGB color
      * according to https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
      * @param rgbValue - the value of the RGB component, e.g., R; should be between 0 and 255.
      * @returns standardized value of RGB component
