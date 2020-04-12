@@ -4,11 +4,16 @@ import { Color } from './color';
  * Provides method for calculating the contrast ratio of two colors.
  */
 export class ContrastRatioCalculator {
-    private static LUMINANCE_ADJUSTMENT = 0.05;
+    /**
+     * The constant to adjust luminance values by in
+     * contrast ratio formula.
+     */
+    static LUMINANCE_ADJUSTMENT = 0.05;
 
     /**
      * Calculates the contrast ratio of two colors
      * (see https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html#contrast-ratiodef).
+     * (L1 + 0.05) / (L2 + 0.05), where L1 and L2 are relative luminances of the colors and L1 >= L2.
      * @param a a {@link Color}
      * @param b the other {@link Color}
      */
