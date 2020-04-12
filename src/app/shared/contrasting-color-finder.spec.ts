@@ -55,6 +55,34 @@ describe('ContrastingColorFinder', () => {
                         4.5),
                     expectedColor: new Color('#707070')
                 },
+                {
+                    config: new ColorFinderConfig(
+                        new Color('#0000A0'),
+                        new Color('#E173D9'),
+                        7),
+                    expectedColor: new Color('#000048')
+                },
+                {
+                    config: new ColorFinderConfig(
+                        new Color('#A02297'),
+                        new Color('#E173D9'),
+                        7),
+                    expectedColor: new Color('#21021f')
+                },
+                {
+                    config: new ColorFinderConfig(
+                        new Color('#4143A5'),
+                        new Color('#56B436'),
+                        2),
+                    expectedColor: new Color('#595cdc')
+                },
+                {
+                    config: new ColorFinderConfig(
+                        new Color('#9999AA'),
+                        new Color('#FFFFFF'),
+                        5),
+                    expectedColor: new Color('#6e6e7b')
+                },
             ];
 
             const results = finder.findContrastingColors(...tests.map(test => test.config));
