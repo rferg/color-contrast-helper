@@ -1,5 +1,5 @@
 import { Rgb } from './rgb';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Hsl } from './hsl';
 
 /**
  * Represents a color.
@@ -73,6 +73,57 @@ export class Color {
     static convertRgbToHex(rgb: Rgb): string {
         if (!rgb) { return ''; }
         return '#' + rgb.toArray().map(rgbValue => rgbValue.toString(16).padStart(2, '0')).join('');
+    }
+
+    /**
+     * Converts {@link Rgb} to {@link Hsl}
+     * @param rgb the {@link Rgb} to convert
+     * @returns the {@link Hsl} representation of the same color
+     */
+    static convertRgbToHsl(rgb: Rgb): Hsl {
+        const hslValues = { h: 0, s: 0, l: 0 };
+        const [r, g, b] = rgb.toArray().map(value => value / 255);
+        const min = Math.min(r, g, b);
+        const max = Math.max(r, g, b);
+        const luminance = (max + min) / 2;
+        hslValues.l = Math.round(luminance * 100);
+        if (min === max) {
+            // If max and min rgb values are equal, there is no saturation
+            // and therefore we don't need to calculate hue--it's a shade of gray.
+            return new Hsl(hslValues);
+        }
+        const range = max - min;
+        const saturation = luminance < 0.5 ? range / (max + min) : range / (2 - max - min);
+        hslValues.s = Math.round(saturation * 100);
+
+        let hue: number;
+        switch (max) {
+            case r:
+                hue = (g - b) / range;
+                break;
+            case g:
+                hue = (b - r) / range + 2;
+                break;
+            case b:
+                hue = (r - g) / range + 4;
+                break;
+            default:
+                throw new Error('Cannot calculate hue. Something went wrong--invalid RGB max.');
+        }
+        // Convert to degrees.
+        hue *= 60;
+        if (hue < 0) { hue += 360; }
+        hslValues.h = Math.round(hue);
+        return new Hsl(hslValues);
+    }
+
+    /**
+     * Converts {@link Hsl} to {@link Rgb}
+     * @param hsl the {@link Hsl} to convert
+     * @returns the {@link Rgb} representation of the same color
+     */
+    static convertHslToRgb(hsl: Hsl): Rgb {
+        throw new Error('Method not implemented');
     }
 
     private getRelativeLuminance(): number {
