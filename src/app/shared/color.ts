@@ -119,11 +119,51 @@ export class Color {
 
     /**
      * Converts {@link Hsl} to {@link Rgb}
+     * (see {@link https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_RGB})
      * @param hsl the {@link Hsl} to convert
      * @returns the {@link Rgb} representation of the same color
      */
     static convertHslToRgb(hsl: Hsl): Rgb {
-        throw new Error('Method not implemented');
+        const [hue, saturation, luminance] = hsl.toArray().map((v, i) => v / (i ? 100 : 1));
+        const chroma = (1 - Math.abs((2 * luminance) - 1)) * saturation;
+        let huePrime = hue / 60;
+        const secondComponent = chroma * (1 - Math.abs((huePrime % 2) - 1));
+
+        huePrime = Math.floor(huePrime);
+        let [ r, g, b ] = [0, 0, 0];
+        switch (huePrime) {
+            case 0:
+                r = chroma;
+                g = secondComponent;
+                break;
+            case 1:
+                r = secondComponent;
+                g = chroma;
+                break;
+            case 2:
+                g = chroma;
+                b = secondComponent;
+                break;
+            case 3:
+                g = secondComponent;
+                b = chroma;
+                break;
+            case 4:
+                r = secondComponent;
+                b = chroma;
+                break;
+            case 5:
+                r = chroma;
+                b = secondComponent;
+                break;
+            default:
+                break;
+        }
+
+        const lightnessAdjustment = luminance - (chroma / 2);
+        const [finalR, finalG, finalB] = [r, g, b]
+            .map(value => Math.round((value + lightnessAdjustment) * 255));
+        return new Rgb({r: finalR, g: finalG, b: finalB});
     }
 
     private getRelativeLuminance(): number {

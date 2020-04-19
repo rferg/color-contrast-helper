@@ -108,17 +108,20 @@ describe('Color', () => {
     });
 
     const RGB_HSL_EQUIVALENTS = [
-        { rgb: [74, 142, 255], hsl: [217, 100, 65] },
+        { rgb: [88, 74, 242], hsl: [245, 87, 62] },
         { rgb: [0, 0, 0], hsl: [0, 0, 0] },
         { rgb: [255, 255, 255], hsl: [0, 0, 100] },
         { rgb: [168, 60, 60], hsl: [0, 47, 45] },
         { rgb: [195, 195, 195], hsl: [0, 0, 76] },
         { rgb: [27, 193, 55], hsl: [130, 75, 43] },
         { rgb: [138, 77, 164], hsl: [282, 36, 47] },
-        { rgb: [238, 208, 3], hsl: [52, 98, 47] },
+        { rgb: [245, 163, 165], hsl: [359, 80, 80] },
         { rgb: [136, 132, 101], hsl: [53, 15, 46] },
         { rgb: [44, 89, 100], hsl: [192, 39, 28] },
     ];
+
+    const withinOne: (a: number, b: number) => boolean = (a, b) =>
+        a === b || a === b - 1 || a - 1 === b;
 
     describe('convertRgbToHsl', () => {
         it('should convert correctly', () => {
@@ -126,7 +129,20 @@ describe('Color', () => {
                 const rgb = new Rgb({r, g, b});
                 const actualHsl = Color.convertRgbToHsl(rgb);
 
-                expect(actualHsl.toArray()).toEqual(hsl);
+                actualHsl.toArray().forEach((v, i) =>
+                    expect(withinOne(v, hsl[i])).withContext(`${v} did not match ${hsl[i]}`).toBeTrue());
+            });
+        });
+    });
+
+    describe('convertHslToRgb', () => {
+        it('should convert correctly', () => {
+            RGB_HSL_EQUIVALENTS.forEach(({ rgb, hsl: [h, s, l]}) => {
+                const hsl = new Hsl({h, s, l});
+                const actualRgb = Color.convertHslToRgb(hsl);
+
+                actualRgb.toArray().forEach((v, i) =>
+                    expect(withinOne(v, rgb[i])).withContext(`${v} did not match ${rgb[i]}`).toBeTrue());
             });
         });
     });
