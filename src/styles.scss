@@ -1,1 +1,62 @@
-/* You can add global styles to this file, and also import other style files */
+@use "sass:color";
+
+/* Colors */
+$dark: #0D1821;
+$light: #F0F4EF;
+$primary: #344966;
+$secondary: #E6AACE;
+$tertiary: #BFCC94;
+$on-dark: $light;
+$on-light: $dark;
+$on-primary: $light;
+$on-secondary: $dark;
+$on-tertiary: $dark;
+
+$body-gradient: linear-gradient(to right top, #0d1821, #13212d, #192a3a, #203347, #283c54, #384864, #495575, #5c6185, #7d739b, #9f85ae, #c297bf, #e6aace);
+
+$container-shadow: 4px 4px 4px color.adjust($on-dark, $alpha: 0.3);
+$in-container-shadow: 1px 2px 2px color.adjust($on-dark, $alpha: 0.2);
+
+$bp-largest: 75em;     // 1200px
+$bp-large: 68.75em;    // 1100px
+$bp-medium: 56.25em;   // 900px
+$bp-small: 37.5em;     // 600px
+$bp-smallest: 31.25em; // 500px
+
+@font-face {
+    font-family: system;
+    font-style: normal;
+    font-weight: 300;
+    src: local(".SFNSText-Light"), local(".HelveticaNeueDeskInterface-Light"), local(".LucidaGrandeUI"), local("Ubuntu Light"), local("Segoe UI Light"), local("Roboto-Light"), local("DroidSans"), local("Tahoma");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%; // 1rem = 10px, 10px/16px = 62.5%
+
+    @media only screen and (max-width: $bp-large) {
+        font-size: 50%;
+    }
+}
+
+body {
+    font-family: 'system';
+    font-weight: 400;
+    line-height: 1.6;
+    color: $on-dark;
+    background-image: $body-gradient;
+
+    min-height: 100vh;
+}
+
