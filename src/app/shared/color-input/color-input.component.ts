@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Color } from 'src/app/core/models/color';
 import { Subject, Observable } from 'rxjs';
+import { Rgb } from 'src/app/core/models/rgb';
 
 @Component({
   selector: 'app-color-input',
@@ -67,6 +68,15 @@ export class ColorInputComponent implements ControlValueAccessor {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  onRgbChange(value: number, component: 'r'|'g'|'b'): void {
+    const newRgbValues = {
+      ...(this.value || new Color('#000')).rgb,
+      [component]: value
+    };
+    this.value = new Color(
+      Color.convertRgbToHex(new Rgb(newRgbValues)));
   }
 
   setIsEditing(isEditing: boolean): void {

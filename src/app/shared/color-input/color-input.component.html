@@ -1,5 +1,41 @@
 <app-pop-up [show$]="isEditing$">
-    <p>Test pop up</p>
+    <div class="pop-up-form-container">
+        <div class="rgb-inputs-container">
+            <div class="input-label-group">
+                <label for="r">R</label>
+                <input type="number"
+                    max="255"
+                    min="0"
+                    id="r"
+                    [disabled]="isDisabled$ | async"
+                    [ngModel]="(value && value.rgb.r)"
+                    (ngModelChange)="onRgbChange($event, 'r')"
+                    [ngModelOptions]="{ name: 'r', updateOn: 'blur' }">
+            </div>
+            <div class="input-label-group">
+                <label for="g">G</label>
+                <input type="number"
+                    max="255"
+                    min="0"
+                    id="g"
+                    [disabled]="isDisabled$ | async"
+                    [ngModel]="(value && value.rgb.g)"
+                    (ngModelChange)="onRgbChange($event, 'g')"
+                    [ngModelOptions]="{ name: 'g', updateOn: 'blur' }">
+            </div>
+            <div class="input-label-group">
+                <label for="b">B</label>
+                <input type="number"
+                    max="255"
+                    min="0"
+                    id="b"
+                    [disabled]="isDisabled$ | async"
+                    [ngModel]="(value && value.rgb.b)"
+                    (ngModelChange)="onRgbChange($event, 'b')"
+                    [ngModelOptions]="{ name: 'b', updateOn: 'blur' }">
+            </div>
+        </div>
+    </div>
 </app-pop-up>
 <input type="text"
     class="hex-input"
@@ -7,7 +43,6 @@
     (ngModelChange)="onHexChange($event)"
     [ngModelOptions]="{ name: 'hex', updateOn: 'blur' }"
     (focus)="setIsEditing(true)"
-    (blur)="setIsEditing(false)"
     [ngClass]="{ 'dark-color-text': isDarkColorText$ | async }"
     [ngStyle]="{ 'background-color': (value && value.hex), 'outline-color': (value && value.hex) }"
     [disabled]="isDisabled$ | async"/>
