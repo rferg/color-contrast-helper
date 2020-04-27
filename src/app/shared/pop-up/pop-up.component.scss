@@ -1,0 +1,10 @@
+@use "../../../styles/base";
+
+.pop-up {
+    position: absolute;
+    top: 0;
+    right: 0;
+    pointer-events: none;
+    max-height: 30em;
+    overflow-y: auto;
+}

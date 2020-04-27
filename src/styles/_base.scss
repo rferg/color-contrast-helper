@@ -1,0 +1,28 @@
+@use "sass:color";
+
+$dark: #0D1821;
+$light: #F0F4EF;
+$primary: #344966;
+$secondary: #E6AACE;
+$tertiary: #BFCC94;
+$on-dark: $light;
+$on-light: $dark;
+$on-primary: $light;
+$on-secondary: $dark;
+$on-tertiary: $dark;
+
+$body-gradient: linear-gradient(to right top, #0d1821, #13212d, #192a3a, #203347, #283c54, #384864, #495575, #5c6185, #7d739b, #9f85ae, #c297bf, #e6aace);
+
+$container-shadow: 2px 2px 4px rgba(240, 244, 239, 0.7);
+$in-container-shadow: 2px 2px 2px rgba(240, 244, 239, 0.5);
+
+$border-radius: 0.2em;
+
+$bp-largest: 75em;
+$bp-large: 68.75em;
+$bp-medium: 56.25em;
+$bp-small: 37.5em;
+$bp-smallest: 31.25em;
+
+$easing: cubic-bezier(0.65, 0, 0.35, 1);
+$animation-duration: 300ms;

@@ -1,1 +1,13 @@
-<p>color-input works!</p>
+<app-pop-up [show$]="isEditing$">
+    <p>Test pop up</p>
+</app-pop-up>
+<input type="text"
+    class="hex-input"
+    [ngModel]="(value && value.hex) || ''"
+    (ngModelChange)="onHexChange($event)"
+    [ngModelOptions]="{ name: 'hex', updateOn: 'blur' }"
+    (focus)="setIsEditing(true)"
+    (blur)="setIsEditing(false)"
+    [ngClass]="{ 'dark-color-text': isDarkColorText$ | async }"
+    [ngStyle]="{ 'background-color': (value && value.hex), 'outline-color': (value && value.hex) }"
+    [disabled]="isDisabled$ | async"/>

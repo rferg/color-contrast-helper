@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-pop-up',
@@ -6,11 +7,9 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./pop-up.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PopUpComponent implements OnInit {
+export class PopUpComponent {
+  @Input() show$: Observable<boolean>;
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

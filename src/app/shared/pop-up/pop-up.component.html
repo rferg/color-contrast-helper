@@ -1,1 +1,3 @@
-<p>pop-up works!</p>
+<div class="pop-up container enter-animation" [ngClass]="{ 'enter': show$ | async }">
+    <ng-content></ng-content>
+</div>

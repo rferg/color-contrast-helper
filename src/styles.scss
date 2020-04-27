@@ -1,27 +1,4 @@
-@use "sass:color";
-
-/* Colors */
-$dark: #0D1821;
-$light: #F0F4EF;
-$primary: #344966;
-$secondary: #E6AACE;
-$tertiary: #BFCC94;
-$on-dark: $light;
-$on-light: $dark;
-$on-primary: $light;
-$on-secondary: $dark;
-$on-tertiary: $dark;
-
-$body-gradient: linear-gradient(to right top, #0d1821, #13212d, #192a3a, #203347, #283c54, #384864, #495575, #5c6185, #7d739b, #9f85ae, #c297bf, #e6aace);
-
-$container-shadow: 4px 4px 4px color.adjust($on-dark, $alpha: 0.3);
-$in-container-shadow: 1px 2px 2px color.adjust($on-dark, $alpha: 0.2);
-
-$bp-largest: 75em;     // 1200px
-$bp-large: 68.75em;    // 1100px
-$bp-medium: 56.25em;   // 900px
-$bp-small: 37.5em;     // 600px
-$bp-smallest: 31.25em; // 500px
+@import "./styles/base";
 
 @font-face {
     font-family: system;
@@ -58,5 +35,54 @@ body {
     background-image: $body-gradient;
 
     min-height: 100vh;
+}
+
+input, button {
+    outline: none;
+    border: none;
+    padding: 0.5em;
+    text-align: center;
+    border-radius: $border-radius;
+    box-shadow: $in-container-shadow;
+}
+
+*:focus {
+    outline-offset: 0.25em;
+    outline: 0.05em solid $secondary;
+}
+
+.container {
+    padding: 1em;
+    background-color: $dark;
+    box-shadow: $container-shadow;
+    border-radius: $border-radius;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    margin-bottom: 1em;
+    padding: 1em 0;
+    border-bottom: 0.125em solid $secondary;
+    border-radius: $border-radius;
+    font-weight: bold;
+}
+
+.enter-animation, .enter-animation-fade {
+    opacity: 0;
+    transform: translateY(-5%);
+    pointer-events: none;
+    transition: opacity 300ms $easing, transform 300ms $easing;
+
+    &.enter {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+}
+
+.enter-animation-fade {
+    transform: none;
 }
 
