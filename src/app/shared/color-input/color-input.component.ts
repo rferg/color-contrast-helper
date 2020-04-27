@@ -1,8 +1,9 @@
-import { Component, ChangeDetectionStrategy, forwardRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, forwardRef, OnDestroy, ElementRef, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Color } from 'src/app/core/models/color';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, Subscription } from 'rxjs';
 import { Rgb } from 'src/app/core/models/rgb';
+import { DocumentClickService } from 'src/app/core/services/document-click.service';
 
 @Component({
   selector: 'app-color-input',
@@ -15,7 +16,7 @@ import { Rgb } from 'src/app/core/models/rgb';
     multi: true
   }]
 })
-export class ColorInputComponent implements ControlValueAccessor {
+export class ColorInputComponent implements ControlValueAccessor, OnInit, OnDestroy {
   private _value: Color;
   get value(): Color {
     return this._value;
@@ -30,6 +31,8 @@ export class ColorInputComponent implements ControlValueAccessor {
   private onChange: (v: Color) => void;
   private onTouched: (v: Color) => void;
 
+  private documentClickSubscription: Subscription;
+
   private isDisabledSource = new Subject<boolean>();
   isDisabled$: Observable<boolean> = this.isDisabledSource.asObservable();
 
@@ -39,7 +42,22 @@ export class ColorInputComponent implements ControlValueAccessor {
   private isDarkColorTextSource = new Subject<boolean>();
   isDarkColorText$ = this.isDarkColorTextSource.asObservable();
 
-  constructor() { }
+  constructor(
+    private documentClickService: DocumentClickService,
+    private elementRef: ElementRef) { }
+
+  ngOnInit() {
+    this.documentClickSubscription = this.documentClickService.click$.subscribe(event => {
+      const nativeElement = this.elementRef && this.elementRef.nativeElement as HTMLElement;
+      if (nativeElement && event && !nativeElement.contains(event.target as Node)) {
+        this.setIsEditing(false);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.documentClickSubscription) { this.documentClickSubscription.unsubscribe(); }
+  }
 
   writeValue(value: Color): void {
     this.value = value;
