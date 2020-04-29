@@ -1,7 +1,7 @@
 <app-pop-up [show$]="isEditing$">
     <div class="pop-up-form-container">
         <div class="rgb-inputs-container">
-            <div class="input-label-group">
+            <div class="input-label-group-small">
                 <label for="r">R</label>
                 <input type="number"
                     max="255"
@@ -12,7 +12,7 @@
                     (ngModelChange)="onRgbChange($event, 'r')"
                     [ngModelOptions]="{ name: 'r', updateOn: 'blur' }">
             </div>
-            <div class="input-label-group">
+            <div class="input-label-group-small">
                 <label for="g">G</label>
                 <input type="number"
                     max="255"
@@ -23,7 +23,7 @@
                     (ngModelChange)="onRgbChange($event, 'g')"
                     [ngModelOptions]="{ name: 'g', updateOn: 'blur' }">
             </div>
-            <div class="input-label-group">
+            <div class="input-label-group-small">
                 <label for="b">B</label>
                 <input type="number"
                     max="255"

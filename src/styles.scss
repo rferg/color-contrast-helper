@@ -37,6 +37,16 @@ body {
     min-height: 100vh;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 input, button {
     outline: none;
     border: none;
@@ -44,6 +54,7 @@ input, button {
     text-align: center;
     border-radius: $border-radius;
     box-shadow: $in-container-shadow;
+    font-size: inherit;
 }
 
 *:focus {
@@ -84,5 +95,26 @@ input, button {
 
 .enter-animation-fade {
     transform: none;
+}
+
+.input-label-group-small {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5em;
+    font-size: 1.25em;
+    
+    & > * {
+        flex: 1 1 50%;
+    }
+
+    label {
+        margin-right: 0.5em;
+    }
+
+    input {
+        padding: 0.25em;
+    }
 }
 
