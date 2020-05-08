@@ -1,0 +1,35 @@
+<div class="contrast-container">
+    <header>
+        <h1 class="head">Contrast Checker</h1>
+        <h6 class="subhead">
+            Check the contrast ratio of two colors. Use the minimum ratio field to get a color suggestion.
+        </h6>
+    </header>
+    <section class="container">
+        <app-color-input *ngIf="foreground$ | async as foreground"
+            [ngModel]="foreground"
+            (ngModelChange)="foregroundChange($event)"></app-color-input>
+        <app-color-input *ngIf="background$ | async as background"
+            [ngModel]="background"
+            (ngModelChange)="backgroundChange($event)"></app-color-input>
+        <div class="min-and-ratio-container">
+            <div class="minimum-ratio-container">
+                <label>Min. Contrast Ratio:</label>
+                <input type="number"
+                    min="0"
+                    max="21"
+                    step="0.1"
+                    name="minimumContrastRatio"
+                    [ngModel]="minimumRatio$ | async"
+                    (ngModelChange)="minimumRatioChange($event)" />
+            </div>
+            <div class="ratio-container">
+                <span>Contrast Ratio:</span>
+                <span class="ratio"
+                    [ngClass]="{'warning warning-border': ratioIsBelowMin$ | async }">
+                    {{(contrastRatio$ | async) | number:'1.0-2'}}
+                </span>
+            </div>
+        </div>
+    </section>
+</div>

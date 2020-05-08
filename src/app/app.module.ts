@@ -13,7 +13,6 @@ import { CoreModule } from './core/core.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SharedModule,
     CoreModule
   ],
   providers: [],

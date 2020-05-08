@@ -1,4 +1,4 @@
-@use "../../../styles/base";
+@import "../../../styles/base";
 
 .pop-up {
     position: absolute;
@@ -6,4 +6,8 @@
     right: 0;
     max-height: 30em;
     overflow-y: auto;
+    z-index: 1;
+    transform: translateY(2em);
+    box-shadow: $in-container-shadow;
+    background-color: $primary;
 }

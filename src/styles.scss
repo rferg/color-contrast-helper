@@ -1,11 +1,11 @@
 @import "./styles/base";
 
-@font-face {
-    font-family: system;
-    font-style: normal;
-    font-weight: 300;
-    src: local(".SFNSText-Light"), local(".HelveticaNeueDeskInterface-Light"), local(".LucidaGrandeUI"), local("Ubuntu Light"), local("Segoe UI Light"), local("Roboto-Light"), local("DroidSans"), local("Tahoma");
-}
+// @font-face {
+//     font-family: system;
+//     font-style: normal;
+//     font-weight: 300;
+//     src: local(".SFNSText-Light"), local(".HelveticaNeueDeskInterface-Light"), local(".LucidaGrandeUI"), local("Ubuntu Light"), local("Segoe UI Light"), local("Roboto-Light"), local("DroidSans"), local("Tahoma");
+// }
 
 * {
     margin: 0;
@@ -27,14 +27,44 @@ html {
     }
 }
 
-body {
-    font-family: 'system';
+body, input, textarea {
+    font-family: 'Fira Mono', monospace;
     font-weight: 400;
+    font-size: 2em;
     line-height: 1.6;
+}
+body {
     color: $on-dark;
-    background-image: $body-gradient;
+    background-color: $dark;
 
     min-height: 100vh;
+
+    @media only screen and (max-width: $bp-large) {
+        line-height: 1.2;
+    }
+}
+
+h1 {
+    font-size: 3em;
+}
+h2 {
+    font-size: 2.25em;
+}
+h3 {
+    font-size: 1.755em;
+}
+h4 {
+    font-size: 1.5em;
+}
+h5 {
+    font-size: 1.24em;
+}
+h6 {
+    font-size: 1em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
 }
 
 input::-webkit-outer-spin-button,
@@ -64,20 +94,21 @@ input, button {
 
 .container {
     padding: 1em;
-    background-color: $dark;
-    box-shadow: $container-shadow;
     border-radius: $border-radius;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.header {
+header {
     margin-bottom: 1em;
-    padding: 1em 0;
-    border-bottom: 0.125em solid $secondary;
-    border-radius: $border-radius;
-    font-weight: bold;
+    text-align: center;
+    padding: 1em;
+    
+    .head {
+        text-shadow: $primary 0 0.1em;
+        margin-bottom: 1em;
+    }    
 }
 
 .enter-animation, .enter-animation-fade {
@@ -116,5 +147,15 @@ input, button {
     input {
         padding: 0.25em;
     }
+}
+
+.warning {
+    color: $warning;
+}
+.warning-background {
+    background-color: $warning;
+}
+.warning-border {
+    border-color: $warning;
 }
 

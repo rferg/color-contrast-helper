@@ -2,12 +2,13 @@
 
 :host {
     position: relative;
+    width: 100%;
 
     .hex-input {
         cursor: pointer;
         background-color: $dark;
         color: $on-dark;
-        font-size: x-large;
+        width: 100%;
 
         &:disabled {
             cursor: not-allowed;            

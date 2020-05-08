@@ -5,6 +5,7 @@ $light: #F0F4EF;
 $primary: #344966;
 $secondary: #E6AACE;
 $tertiary: #BFCC94;
+$warning: #DB5461;
 $on-dark: $light;
 $on-light: $dark;
 $on-primary: $light;
@@ -13,8 +14,8 @@ $on-tertiary: $dark;
 
 $body-gradient: linear-gradient(to right top, #0d1821, #13212d, #192a3a, #203347, #283c54, #384864, #495575, #5c6185, #7d739b, #9f85ae, #c297bf, #e6aace);
 
-$container-shadow: 2px 2px 4px rgba(240, 244, 239, 0.7);
-$in-container-shadow: 2px 2px 2px rgba(240, 244, 239, 0.5);
+$container-shadow: 0px 2px 4px rgba(240, 244, 239, 0.7);
+$in-container-shadow: 0px 2px 2px rgba(240, 244, 239, 0.5);
 
 $border-radius: 0.2em;
 
